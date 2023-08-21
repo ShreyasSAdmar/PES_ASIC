@@ -414,4 +414,3 @@ this would generate object file `custom1to9.o`.
 
 `spike pk custom1to9.o`
 
-![Screenshot from 2023-08-20 20-29-14](https://github.com/Syedhasan7/pes_asic_class/assets/109273742/c32f4af0-c473-4d59-8d4a-8e7ad4bf3f41)
