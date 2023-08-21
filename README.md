@@ -363,24 +363,27 @@ ABI names for registers serve as a standardized way to designate the purpose and
 - When you call an assembly function from your C code, the C calling convention is followed, including pushing arguments onto the stack or passing them in registers as required.
 - The program executes the assembly function, following the assembly instructions you've provided.
 
+  <img width="430" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/60608708-b7b9-4e50-a265-d7cf1151d85d">
+
 ## Review ASM Function Calls
 - We wrote C code in one file and your assembly code in a separate file.
 - In the assembly file, we declared assembly functions with appropriate signatures that match the calling conventions of your platform.
 
 **C Program**
-`custom1to9.c`
+`1tonmod.c`
   ``` c
   #include <stdio.h>
   
-  extern int load(int x, int y);
+extern int load(int x, int y);
   
-  int main()
-  {
-    int result = 0;
-    int count = 9;
-    result = load(0x0, count+1);
-    printf("Sum of numbers from 1 to 9 is %d\n", result);
-  }
+int main()
+{
+	int count,result = 0;
+	printf("Enter value of  n : \t");
+	scanf("%d",&count);
+    	result = load(0x0, count+1);
+	printf("Sum of numbers from 1 to %d is %d\n",count, result);
+}
 ```
 **Asseembly File**
 `load.s`
@@ -389,28 +392,38 @@ ABI names for registers serve as a standardized way to designate the purpose and
 .global load
 .type load, @function
 
-load:
+load:	add a4, a0, zero
+	add a2, a0, a1
+	add a3, a0, zero
 
-add a4, a0, zero
-add a2, a0, a1
-add a3, a0, zero
-
-loop:
-
-add a4, a3, a4
-addi a3, a3, 1
-blt a3, a2, loop
-add a0, a4, zero
-ret
+loop:	add a4, a3, a4
+	addi a3, a3, 1
+	blt a3, a2, loop
+	add a0, a4, zero
+	ret
 ```
+<img width="430" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/d13a3a8c-096c-42a5-afef-d2e148559a40">
+
 ## Simulate C Program using Function Call
-**Compilation:** To compile C code and Asseembly file use the command
 
-`riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o custom1to9.o custom1to9.c load.s` 
+**Compilation and Execution:** 
++ To compile C code and Asseembly file use the command
+```sh
+`riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o 1tonmod.o 1tonmod.c load.s` 
+```
 
-this would generate object file `custom1to9.o`.
++this would generate object file `1tonmod.o`.
 
-**Execution:** To execute the object file run the command 
++ To execute the object file run the command 
 
-`spike pk custom1to9.o`
+```sh
+spike pk 1tonmod.o
+```
 
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/f19cd29c-f487-4cb8-acd6-6434884ce923)
+
++ For the assembly code, use the command 
+```sh
+riscv64-unknown-elf-objdump -d 1tonmod.o |less
+```
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/e76f4e4e-f35c-4bac-a6ca-f269b90b5c36)
