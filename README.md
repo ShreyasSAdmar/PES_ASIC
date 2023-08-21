@@ -118,7 +118,7 @@ This will initiate the installation process and set up the necessary environment
 ## C Program
 + C program to compute sum of first n numbers using leafpad text editor.
 
-`leafpad sumton.c`
+`leafpad sum1ton.c`
 ``` c
 #include<stdio.h>
 
