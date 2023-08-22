@@ -38,6 +38,12 @@ This will initiate the installation process and set up the necessary environment
 
 
 # TABLE OF CONTENTS
+
+<details>
+<summary>DAY 1 </summary>
+<br>
+
+	
 ## DAY 1 
 **Introduction to RISCV ISA and GNU Compiler Toolchain**
 + Introduction to Basic Keywords
@@ -55,18 +61,6 @@ This will initiate the installation process and set up the necessary environment
   - [64-bit Signed Numbers](#64-bit-signed-numbers)
   - [Labwork For Signed and Unsigned Numbers](#labwork-for-signed-and-unsigned-numbers)
 
-## DAY 2 
-**Introduction to ABI and Basic Verification Flow**
-+ Application Binary Interface
-  - [Introduction to ABI](#introduction-to-abi)
-  - [Memory Allocation for Double Words](#memory-allocation-for-double-words)
-  - [Load Add and Store Instructions](#load-add-and-store-instructions)
-  - [32-Registers and their ABI Names](#32-registers-and-their-abi-names)
-
-+ Labwork using ABI Function Calls
-  - [Algorithm for C Program using ASM](#algorithm-for-c-program-using-asm)
-  - [Review ASM Function Calls](#review-asm-function-calls)
-  - [Simulate C Program using Function Call](#simulate-c-program-using-function-call)
 # Introduction to Basic Keywords
 ## Introduction
 - **ISA (Instruction Set Archhitecture)**
@@ -278,8 +272,24 @@ int main(){
 }
 ```
 ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/eb0403ad-4b3c-4bd0-a84f-beb5d1467c46)
+</details>
 
+<details>
+<summary>DAY 2 </summary>
+<br>
+	
+## DAY 2 
+**Introduction to ABI and Basic Verification Flow**
++ Application Binary Interface
+  - [Introduction to ABI](#introduction-to-abi)
+  - [Memory Allocation for Double Words](#memory-allocation-for-double-words)
+  - [Load Add and Store Instructions](#load-add-and-store-instructions)
+  - [32-Registers and their ABI Names](#32-registers-and-their-abi-names)
 
++ Labwork using ABI Function Calls
+  - [Algorithm for C Program using ASM](#algorithm-for-c-program-using-asm)
+  - [Review ASM Function Calls](#review-asm-function-calls)
+  - [Simulate C Program using Function Call](#simulate-c-program-using-function-call)
 
 # Application Binary Interface
 
@@ -427,3 +437,7 @@ spike pk 1tonmod.o
 riscv64-unknown-elf-objdump -d 1tonmod.o |less
 ```
 ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/e76f4e4e-f35c-4bac-a6ca-f269b90b5c36)
+
+
+
+</details>
