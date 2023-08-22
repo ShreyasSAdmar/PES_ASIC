@@ -291,6 +291,9 @@ int main(){
   - [Review ASM Function Calls](#review-asm-function-calls)
   - [Simulate C Program using Function Call](#simulate-c-program-using-function-call)
 
++ Basic Verification Flow using iverilog
+  -[Lab to run C Program on RISC-V CPU](#lab-to-run-c-program-on-risc-v-cpu) 
+
 # Application Binary Interface
 
 ## Introduction to ABI
@@ -438,6 +441,38 @@ riscv64-unknown-elf-objdump -d 1tonmod.o |less
 ```
 ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/e76f4e4e-f35c-4bac-a6ca-f269b90b5c36)
 
+# Basic Verification Flow using iverilog
 
+## Lab to run C Program on RISC-V CPU
 
+ - RISC-V CPU is written in verilog
+ - C Program is converted to hex file and loaded in memoery
+ - Memory is read by the CPU and processes its contents
+ - Output is displayed by CPU
+
+   ![Screenshot_20230822_194436_Chrome](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/7a457416-45d3-4812-b397-1eec2cc289f8)
+
++ Type the following command in the terminal to download some basic labs
+```sh
+git clone https://github.com/kunalg123/riscv_workshop_collaterals.git
+```
+
++ Move to risv_workshop_collaterals directory using `cd riscv_workshop_collaterals`
++ The command `ls -ltr` lists the files in the directory.
++ Move to labs using `cd labs`
++ "picorv32.v" is one of the risc-v CPU's. Use `vim picorv32.v` or `less picorv32.v` to open it to see the verilog codes. Press q to quit.
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9aada571-356d-4cea-841e-c7ff2eb6361c)
+
++ Use `vim testbench.v` to look at the testbench
++ To run use the following command
+  ```sh
+  chmod 777 rv32im.sh
+  ./rv32im.sh
+  ```
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/6ef87618-6a71-433d-8de2-38c51a9976e7)
+
++ Type `ls -ltr` and then `vim firmware.hex` command to see the hex file created.
++ `vim firmware32.hex` to look at the bitstream.
+  
 </details>
