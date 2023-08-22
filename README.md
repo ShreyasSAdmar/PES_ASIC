@@ -292,7 +292,7 @@ int main(){
   - [Simulate C Program using Function Call](#simulate-c-program-using-function-call)
 
 + Basic Verification Flow using iverilog
-  -[Lab to run C Program on RISC-V CPU](#lab-to-run-c-program-on-risc-v-cpu) 
+  - [Lab to run C Program on RISC-V CPU](#lab-to-run-c-program-on-risc-v-cpu) 
 
 # Application Binary Interface
 
