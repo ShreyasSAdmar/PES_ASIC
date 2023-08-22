@@ -450,7 +450,8 @@ riscv64-unknown-elf-objdump -d 1tonmod.o |less
  - Memory is read by the CPU and processes its contents
  - Output is displayed by CPU
 
-   ![Screenshot_20230822_194436_Chrome](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/7a457416-45d3-4812-b397-1eec2cc289f8)
+ <img width="454" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/7a457416-45d3-4812-b397-1eec2cc289f8">
+   
 
 + Type the following command in the terminal to download some basic labs
 ```sh
