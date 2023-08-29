@@ -15,8 +15,11 @@ The objective of VLSI (Very Large Scale Integration) physical design for ASICs (
 
 ## INSTALLATION
 
-To get started with the VLSI Physical Design for ASICs workshop, follow these steps:
+To get started with the VLSI Physical Design for ASICs workshop, follow these steps for the installation of required tools:
 
+<details>
+<summary> Riscv_toolchain Installation </summary>
+	
 1. Download the `run.sh` script from the [GitHub repository](https://github.com/kunalg123/riscv_workshop_collaterals/blob/master/run.sh).
 
 2. Open a terminal on your system.
@@ -34,8 +37,28 @@ To get started with the VLSI Physical Design for ASICs workshop, follow these st
     ```
 
 This will initiate the installation process and set up the necessary environment for the workshop.
+</details>
+<details>
+<summary> Yosys with GTKwave Installation </summary>
+	
++ `cd`
++ `git clone https://github.com/YosysHQ/yosys.git`
++ `cd yosys`
++ `sudo apt install make`
++ `sudo apt-get update`
++ `sudo apt-get install build-essential clang bison flex  libreadline-dev gawk tcl-dev libffi-dev git  graphviz xdot pkg-config python3 libboost-system-dev libboost-python-dev libboost-filesystem-dev zlib1g-dev`
++ `make config-gcc`
++ `make`
++ `sudo make install`
++ `sudo apt install gtkwave`
++ Type `yosys`
+  
+  <img width="358" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/40f2b0a2-e37a-4a25-bd30-d24f1f41dbb5">
+  
+  If received as shown above, installation is successful.
 
-
+    ### End of installation
+</details>
 
 # TABLE OF CONTENTS
 
@@ -477,3 +500,652 @@ git clone https://github.com/kunalg123/riscv_workshop_collaterals.git
 + `vim firmware32.hex` to look at the bitstream.
   
 </details>
+
+
+<details>
+<summary>DAY 3 </summary>
+<br>
+
+	
+## DAY 3
+ **Introduction to Verilog RTL design and Synthesis**
++ Introduction to Open-Source Simulator iVerilog
+   - [Introduction to iVerilog Design Testbench](#introduction-to-iverilog-design-testbench)
++ Labs using iVerilog and GTKwave
+   - [Introduction to Lab](#introduction-to-lab)
+   - [Introduction to iVerilog GTKwave](#introduction-to-iverilog-gtkwave)
++ Introduction to Yosys and Logic synthesis
+   - [Introduction to Yosys](#introduction-to-yosys)
+   - [Introduction to Logic Synthesis](#introduction-to-logic-synthesis)
++ Labs using Yosys and Sky130 PDKs
+   - [Yosys good_mux](#yosys-good_mux)
+
+# Introduction to Open-Source Simulator iVerilog
+## Introduction to iVerilog Design Testbench 
+
+- **Simulator**
+   - It is a tool used for checking/simulating the design. It looks for the changes in the value of input.
+   - Upon a change to the input  the output is evaluated.No change in the inputs => no change in the outputs.
+   - The tool used here is **iverilog** .
+
+- **iVerilog**
+  -  It is an open-source Verilog simulator used for testing and simulating digital circuit designs described in the Verilog hardware description language (HDL).
+  -  Both the design and the testbench are fed to the simulator and it produces a vcd (value change dump) file.
+  -  In order to view the vcd file, we use the GTKwave tool to see the output wave forms.
+    
+   <img width="526" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/7cebeb4b-13c6-47e0-99b0-cf0b74a6df55">
+
+- **Design**
+  - It is the verilog code or set of verilog codes having functions for the required specifications.
+  - May have 1/more primary inputs and 1/more primary outputs.
+  - Verilog is used to describe the behavior and structure of digital circuits at different levels of abstraction, from high-level system descriptions  down to low-level gate-level representations. 
+
+- **Testbench**
+  - A testbench is a verilog program used to check the functionality of the Design. Testbenches are required for testing and simulating digital designs.
+  - It has a stimulus generator and stimulus observer to generate inputs and check the outputs of the design.
+  - TB has no primary inputs or outputs.
+
+    <img width="526" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/cba0ff11-2877-4113-965e-575f6ec16804">
+     
+# Labs using iVerilog and GTKwave
+## Introduction to Lab 
+
++ Make a directory named vsd `mkdir vsd`.
++ Go to the folder using`cd vsd`.
++ Type this command `git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git`
++ A folder called `sky130RTLDesignAndSynthesisWorkshop` is created in the `vsd` directory.
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/253c1f2f-3f14-4f82-aaf1-a27b7a8efdf5)
+
+  - my_lib : contains all the library files
+
+  - lib : contains sky130 standard cell library used for our synthesis
+
+  - verilog_model : contains all the standard cell verilog modules of the standard cells contained in the .lib
+
+  - verilog_files : contains all the verilog source files and testbench files which are required for labs
+
+
+## Introduction to iVerilog GTKwave
+
++ `cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files`
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/175effec-06f3-4ada-b172-eae0cd76362d)
+
++ The design file(good_mux.v) along with the testbench(tb_good_mux.v) can be loaded into the iverilog simulator using
+
+```sh
+iverilog good_mux.v tb_good_mux.v
+```
+
++ When `./a.out` is entered an output file gets created.
+
++ The output of the iverilog, a vcd file, which is created  is loaded into the simualtor gtkwave using 
+
+  ```sh
+   gtkwave tb_good_mux.vcd 
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9d140892-bbe5-459a-b1c5-1eec8b8cfa48)
+
++ The simulator output
+  
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9cb344cb-9b5a-4ccb-917f-130e945c958e)
+
++ Tips to analyse the outputs easily
+  
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/6659af4b-0d8b-47ba-ac88-3a0cc84f557f)
+
+
++ In order to view the contents of the files use
+
+```sh 
+gvim tb_good_mux.v -o good_mux.v
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/d240cf99-6a92-402f-bc3e-f37b6b16036d)
+
+# Introduction to Yosys and Logic Synthesis
+
+## Introduction to Yosys 
+
++ **Synthesizer**
+  - It is a tool used for converting RTL design to netlist.
+  - Here, the synthesizer used is **Yosys**.
+
++ **Yosys**
+  - It is an open-source framework for Verilog RTL synthesis and formal verification.
+  - Yosys provides a collection of tools and algorithms that enable designers to transform high-level RTL (Register Transfer Level) descriptions of digital circuits into optimized gate-level representations suitable for physical implementation on hardware.
+
+ <img width="561" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/c0b71614-ef4d-4646-9005-00bbd4a6bf43">
+
+   - Design and .lib files are fed to the synthesizer to get a netlist file.
+   - **Netlist** is the representation of the design in the form of standard cells in the .lib
+     
++ Commands used to perform different opertions:
+  - `read_verilog` to read the design
+  - `read_liberty` to read the .lib file
+  - `write_verilog` to write out the netlist file
+ 
++ To verify the synthesis
+
+<img width="566" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9ca85f67-137a-499d-a5e6-28b038f82d58">
+
+   - Netlist along with the tesbench is fed to the iverilog simulator.
+   - The vcd file generated is fed to the gtkwave simulator.
+   - The output on the simulator must be same as the output observed during RTL simulation.
+   - Same RTL testbench can be used as the primary inputs and primary outputs remain same between the RTL design and synthesised netlist.
+
+## Introduction to Logic Synthesis 
+
++ **Logic Synthesis**
+  - Logic synthesis is a process in digital design that transforms a high-level hardware description of a digital circuit, typically in a hardware description language (HDL) like Verilog or VHDL, into a lower-level representation composed of logic gates and flip-flops.
+  - The goal of logic synthesis is to optimize the design for various criteria such as performance, area, power consumption, and timing.
+
+ + **.lib**
+   - It is a collection of logical modules like AND, OR, NOT etc.
+   - It has different flavors of same gate like 2 input AND gate, 3 input AND gate etc with different performace speed.
+  
++ **Why different flavors  of gate?**
+  - In order to make a circuit faster, the clock frequency should be high.
+  - For that, the time period of the clock should be as low as possible.
+  
+<img width="400" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/210d9f8f-3320-4165-a60a-96de607a17ac">
+
++ In a sequential circuit, clock period depends on:
+  - Clock to Q of flip-flop A.
+  - Propagation delay of combinational circuit.
+  - Setup time of flip-flop B.
+
+<img width="400" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/18e3937a-b9d4-4ec6-b329-e143856d1a2f">
+
++ **Why need fast and slow cells?**
+  - To ensure that there are no HOLD issues at flip-flop B, we require slow cells.
+  - For a smaller propagation time, we need faster cells.
+  - The collection forms the .lib
+
++ **Faster Cells vs Slower Cells**
+  - Load in digital circuit is of Capacitence.
+  - Faster the charging or dicharging of capacitance, lesser is the cell delay.
+  - However, for a quick charge/ discharge of capacitor, we need transistors capable of sourcing more current i.e, we need **wide transistors**.
+  - Wider transistors have lesser delay but consume more area and power.
+  - Narrow transistors have more delay but consume less area and performance.
+  - Faster cells come with a cost of area and power.
+ 
++ **Selection of the Cells**
+  - We have to guide the Synthesizer to choose the flavour of cells that is optimum for implementation of logic circuit.
+  - More use of faster cells leads to bad circuit in terms of power and area and also hold time violations.
+  - More use of slower cells leads to sluggish circuits amd may not meet the performance needs.
+  - Hence the guidance is offered to the synthesiser in the form of **constraints**.
+
+
+# Labs using Yosys and Sky130 PDKs
+
+## Yosys good_mux  
+
++ ```sh
+  cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+  ```
+  
++ To invoke **yosys** , use the command `yosys`.
+
+  <img width="358" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/40f2b0a2-e37a-4a25-bd30-d24f1f41dbb5">
+
++ To read the library
+    
+     ```sh
+     read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+     ```    
++ To read the design
+
+    ```sh
+  read_verilog good_mux.v
+    ```
+
+ + To syntheis the module
+
+      ```sh
+   synth -top good_mux
+      ```
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/538b5f64-fe80-45a6-b1d2-4716a16ca30a)
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/5eeba289-ec22-4b54-b20d-cbdde5c1c36b)
+ 
+ 
++ To generate the netlist
+
+  ```sh
+  abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  ```
+  
+  <img width="287" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/78d150ae-b427-4ab8-9fdb-5c7c87862b69">
+  <img width="287" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/f2344b45-84db-478d-a773-f418720db48a">
+
+It gives a report of what cells are used and the number of input and output signals.Comparision of number of inputs and outputs with the verilog code.
+
++ To see the logic realised
+
+  `show`
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/dec66ebc-853c-44d6-ad82-cf7c1c1b5d64)
+
+  The mux is completely realised in the form of sky130 library cells.
+
++ To write the netlist
+
+  - ```sh
+    write_verilog good_mux_netlist.v
+    ```
+   - ```sh
+     !gvim good_mux_netlist.v
+     ```
+     
+   - To view a simplified code
+     
+     ```sh
+      write_verilog -noattr good_mux_netlist.v
+     ```
+     
+     ```sh
+     !gvim good_mux_netlist.v
+     ```
+  
+  
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9257ad92-d701-4a0a-af79-623eb12d5a81)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/2fc1c778-95f5-46af-b97c-4cddcda90e02)
+
+
+
+</details>
+
+
+<details>
+<summary>DAY 4 </summary>
+<br>
+
+## DAY 4
+**Timing Libs, Hierarchical vs Flat Synthesis and Efficient Flop Coding Styles**
++ Introduction to Timing Dot Libs
+  - [Introduction to Dot Lib](#introduction-to-dot-lib)
++ Hierarchical vs Flat Synthesis
+  - [Hierarchical Synthesis Flat Synthesis](#hierarchical-synthesis-flat-synthesis) 
++ Various Flop Coding Styles and Optimization
+  - [Why Flops and Flop Coding Styles](#why-flops-and-flop-coding-styles)
+  - [Lab Flop Synthesis Simulations](#lab-flop-synthesis-simulations)
+  - [Interesting Optimisations](#interesting-optimisations)
+
+# Introduction to Timing Dot Libs
+## Introduction to Dot Lib 
+
++ To view the contents in the .lib
+
+  ```sh
+  gvim ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  ```
+
+  <img width="443" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/019e635b-6afe-432c-87f8-63ba20211436">
+
+  + The first line in the file `library ("sky130_fd_sc_hd__tt_025C_1v80") ` :
+    
+    - tt   : indicates **Typical Process**.
+    - 025C : indicates the  temperatures.
+    - 1v80 : indicates the  voltage.
++ It also displays the units of various parameters.
+
+  <img width="284" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/068a2434-321a-4d6b-924c-52f2093f69a5">
+  <img width="229" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/064988f5-7a63-4645-9e04-b16f992a7abf">
+
++ It gives the features of the cells
++ To enable line number `:se nu`
++ To view all the cells `:g//`
++ To view any instance `:/instance`
++ Since there are 5 inputs, for all the 32 possible combinations, it gives the delay, power and all the other parameters for each cell.
++ The below image shows the power consumption and area comparision.
+  
+<img width="911" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/5f18e9bb-2265-4fbe-87d2-3a262e0f22de)">
+
+
+# Hierarchical vs Flat Synthesis
+## Hierarchical Synthesis Flat Synthesis 
+
+**Hierarchical Synthesis**
+  Hierarchical synthesis is an approach in digital design and logic synthesis where complex designs are broken down into smaller, more manageable modules or sub-circuits, and each module is synthesized individually. These synthesized modules are then integrated back into the overall design hierarchy. This approach helps manage the complexity of large designs and allows designers to work on different parts of the design independently.
+  
++ The file we used in this lab is `multiple_modules.v`
+
+  - `cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files`
+  -  `gvim multiple_modules.v`
+
+<img width="321" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/4bc3c105-9467-43c1-8736-5085e6875448">
+
++  `multiple_modules` instantiates `sub_module1` and `sub_module2`
+
++  Launch `yosys`
++  To read the library file
+  ```sh
+  read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  ```
++  To read the verilog file
+  ```sh
+  read_verilog multiple_modules.v
+ ```
++  To set it as top module
+  ```sh
+ synth -top multiple_modules
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/359e77ae-788e-435e-86cd-d3e6b726bb01)
+
+  <img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ead196b7-6d2b-43cc-899b-9f2e515e9200">
+  <img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/a89f369d-1bb0-428e-a4f8-d13989763836">
+  <img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/5543c0a2-2c1e-4e10-8bed-1bac36024acf">
+  
+  
++  To create netlist
+  ```sh
+  abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  ```
++  To view the netlist
+  ```sh
+ show multiple_modules
+ ```
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/2cc04b44-98f6-4e55-9c9a-4fe146b6f0f4)
+
+
+- Here it shows `sub_module1` and `sub_module2` instead of AND gate and OR gate.
+
++ ```sh
+  write_verilog -noattr multiple_modules_hier.v
+  ```
++ ```sh
+  !gvim multiple_modules_hier.v
+  ```
+  
+  <img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9371813a-df5d-400c-9c3a-559e56d1e3bc">
+  <img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/6076240d-4288-4cd9-9144-d52b9a11d4bf">
+  <img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/30857f64-761b-4ead-bce5-59c8166cec1a">
+
+ **Flattened Synthesis**
+ 
+Flattened synthesis is the opposite of hierarchical synthesis. Instead of maintaining the hierarchical structure of the design during synthesis, flattened synthesis combines all modules and sub-modules into a single, flat representation. This means that the entire design is synthesized as a single unit, without preserving the modular organization present in the original high-level description.
+
++  Launch `yosys`
++  +  To read the library file
+  ```sh
+  read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  ```
++  To read the verilog file
+  ```sh
+  read_verilog multiple_modules.v
+ ```
++  To set it as top module
+  ```sh
+ synth -top multiple_modules
+```
+  
++  To create netlist
+  ```sh
+  abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  ```
++ To write out a flattened netlist
+  ```sh
+   flatten
+  ```
++  To view the netlist
+  ```sh
+ show 
+ ```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/e16acceb-507f-4363-b656-b0235f7a30ee)
+
++ ```sh
+  write_verilog -noattr multiple_modules_flat.v
+  ```
++ ```sh
+  !gvim multiple_modules_flat.v
+  ```
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/3e758df8-5337-437b-99e7-3c9c0e6c8c6d)
+
+  
+<img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ab3f1019-2dda-444f-8f2f-42600482cff1">
+<img width="304" alt="image" src="https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/d5417f3e-4580-4c56-83dd-20d62f5f80bf">
+
+
+# Various Flop Coding Styles and Optimization
+## Why Flops and Flop Coding Styles
+
+**Why do we need a Flop?**
+
++ A flip-flop (often abbreviated as "flop") is a fundamental building block in digital circuit design.
++ It's a type of sequential logic element that stores binary information (0 or 1) and can change its output based on clock signals and input values.
++ In a combinational circuit, the output changes after the propagation delay of the circuit once inputs are changed.
++ During the propagation of data, if there are different paths with different propagation delays, then a glitch might occur.
++ There will be multiple glitches for multiple combinational circuits.
++ Hence, we need flops to store the data from the combinational circuits.
++ When a flop is used, the output of combinational circuit is stored in it and it is propagated only at the posedge or negedge of the clock so that the next combinational circuit gets a glitch free input thereby stabilising the output.
++ We use control pins like **set** and **reset** to initialise the flops.
++ They can be synchronous and asynchronous.
+
+**D Flip-Flop with Asynchronous Reset**
++ When the reset is high, the output of the flip-flop is forced to 0, irrespective of the clock signal.
++ Else, on the positive edge of the clock, the stored value is updated at the output.
+
+ ```sh
+ gvim dff_asyncres.v
+```
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/fc1d6645-4448-479f-8a95-c12658676b41)
+
+
+**D Flip_Flop with Asynchronous Set**
++ When the set is high, the output of the flip-flop is forced to 1, irrespective of the clock signal.
++ Else, on positive edge of the clock, the stored value is updated at the output.
+
+```sh
+gvim dff_async_set.v
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/4a3905e6-90fb-4989-bfb4-e3fcc4386521)
+
+**D Flip-Flop with Synchronous Reset**
++ When the reset is high on the positive edge of the clock, the output of the flip-flop is forced to 0.
++ Else, on the positive edge of the clock, the stored value is updated at the output.
+
+  ```sh
+  gvim dff_syncres.v
+  ```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/4ebbce21-a474-4078-8713-68befe906c34)
+
+
+**D Flip-Flop with Asynchronous Reset and Synchronous Reset**
++ When the asynchronous resest is high, the output is forced to 0.
++ When the synchronous reset is high at the positive edge of the clock, the output is forced to 0.
++ Else, on the positive edge of the clock, the stored value is updated at the output.
++ Here, it is a combination of both synchronous and asynchronous reset DFF.
+
+```sh
+gvim dff_asyncres_syncres.v
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9b3d5eb1-f845-4544-b7ee-04fc934c8640)
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/59c0a19e-d76c-4e54-b197-94d22177546b)
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/06d04cda-615d-4cd7-ba18-af81fd4cb5da)
+
+
+## Lab Flop Synthesis Simulations 
+
+**D Flip-Flop with Asynchronous Reset**
++ **Simulation**
+  ```sh
+    cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+    iverilog dff_asyncres.v tb_dff_asyncres.v
+    ./a.out
+    gtkwave tb_dff_asyncres.vcd
+  ```
+  
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ae93bfc8-6278-417a-870f-33fa82f04987)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/841ee7d7-f19b-45c7-8d81-d53c3e45982e)
+
+
++ **Synthesis**
+  ```sh
+  cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+  yosys
+  read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  read_verilog dff_asyncres.v
+  synth -top dff_asyncres
+  dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+  show
+  ```
+
+    ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/57fb2646-2fe2-4989-8343-c091b9236b1d)
+
+
+ **D Flip_Flop with Asynchronous Set**
+ + **Simulation**
+
+   
+  ```sh
+  cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+iverilog dff_async_set.v tb_dff_async_set.v
+./a.out
+gtkwave tb_dff_async_set.vcd
+  ```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/6366bc71-c699-4c21-b792-84e9e0f06565)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/1e727477-faa7-4909-a5b2-52603a99a294)
+
+
++ **Synthesis**
+
+```sh
+ cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_async_set.v
+synth -top dff_async_set
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+  ```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/56df9f39-91d8-4b42-bfed-45794fadda53)
+
+
+**D Flip-Flop with Synchronous Reset**
+
++ **Simulation**
+  ```sh
+  cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+  iverilog dff_syncres.v tb_dff_syncres.v
+  ./a.out
+  gtkwave tb_dff_syncres.vcd
+  ```
+ 
+     
+   ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/3e8b1870-c6a7-493e-b858-1ba97ca62483)
+
+   
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/20ffac93-0bf4-44cb-a512-a922e9b5b1fd)
+
+  
+
++ **Synthesis**
+```sh
+cd vsd/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_syncres.v
+synth -top dff_syncres
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/79098c20-6676-41a8-8851-6d275f4de7f3)
+
+
+## Interesting Optimisations </summary>	
+
++ ```sh
+  gvim mult_2.v
+  ```
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/af09564b-ab4c-4606-9ce1-c18e6525e992)
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/05545a37-c20f-4f17-8b47-7a06adc294b4)
+
+
+```sh
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog mult_2.v
+synth -top mul2
+```
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ae5051bb-4cff-4692-ad3a-b54017bfca19)
+
+
+```sh
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/6a7fc18a-99bd-4004-83c8-6e7744c1c46d)
+
+
+```sh
+write_verilog -noattr mul2_netlist.v
+!gvim mul2_netlist.v
+```
+  
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/4bbf3398-4e7c-4e61-a380-983a45897330)
+
+```sh
+gvim mult_8.v
+```
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ce669f45-c451-4fb0-abfb-96aa8bf6800a)
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/c9b1e11c-332c-4b8d-9846-d6f1f4b29213)
+
+
+```sh
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog mult_8.v
+synth -top mult8
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/daa0c201-25e8-4969-8d05-b3059d933ccc)
+
+
+```sh
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/36593762-4c2d-4522-a6a7-52033321051b)
+
+
+```sh
+write_verilog -noattr mult8_netlist.v
+gvim mult8_netlist.v
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/c0c25019-8b3f-4555-8a25-cfd15d0dc563)
+
+</details>
+
+
