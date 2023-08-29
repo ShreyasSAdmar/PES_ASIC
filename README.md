@@ -1623,7 +1623,8 @@ show
 ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/703b6a44-e68b-4009-bb8f-be6632208141)
 
 
-![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/b0ec5c2c-e2a5-4a60-a2af-5df28194c941)
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/e59ca5e3-893e-4061-8c42-c54311bb7ac7)
+
 
 
 **GLS to Gate-Level Simulation**
