@@ -1148,4 +1148,370 @@ gvim mult8_netlist.v
 
 </details>
 
+<details>
+<summary>DAY 5 </summary>
+<br>
+	
+## DAY 5
+**Combinational and Sequential Optmizations**
++ [Introduction to Optimisations](#introduction-to-optimisations)
++ [Combinational Logic Optimisations](#combinational-logic-optimisations)
++ [Sequential Logic Optimisations](#sequential-logic-optimisations)
++ [Sequential Optimisations for Unused Outputs](#sequential-optimisations-for-unused-outputs)
 
+
+# Introduction to Optimisations 
+## Combinational Optimisation 
+	
++ Combinational logic refers to logic circuits where the outputs depend only on the current inputs and not on any previous states.
++ Combinational optimization is a field of study in computer science and operations research that focuses on finding the best possible solution from a finite set of options for problems that involve discrete variables and have no inherent notion of time.
++ Optimising the combinational logic circuit is squeezing the logic to get the most optimized digital design so that the circuit finally is area and power efficient.
++ Techniques for Optimisations:
+  - **Constant propagation** is an optimization technique used in compiler design and digital circuit synthesis to improve the efficiency of code and circuit implementations by replacing variables or expressions with their constant values where applicable.
+  - **Boolean logic optimization**, also known as logic minimization or Boolean function simplification, is a process in digital design that aims to simplify Boolean expressions or logic circuits by reducing the number of terms, literals, and gates required to implement a given logical function.
+
+## Sequential Logic Optimisations 
+
++ Sequential logic optimizations involve improving the efficiency, performance, and resource utilization of digital circuits that include memory elements like flip-flops and latches.
++ Optimizing sequential logic is crucial in ensuring that digital circuits meet timing requirements, consume minimal power, and occupy the least possible area while maintaining correct functionality.
++ Optimisation methods:
+  - **Sequential constant propagation**, also known as constant propagation across sequential elements, is an optimization technique used in digital design to identify and propagate constant values through sequential logic elements like flip-flops and registers. This technique aims to replace variable values with their known constant values at various stages of the logic circuit, optimizing the design for better performance and resource utilization.
+  - **State optimization**, also known as state minimization or state reduction, is an optimization technique used in digital design to reduce the number of states in finite state machines (FSMs) while preserving the original functionality.
+  - **Sequential logic cloning**, also known as retiming-based cloning or register cloning, is a technique used in digital design to improve the performance of a circuit by duplicating or cloning existing registers (flip-flops) and introducing additional pipeline stages. This technique aims to balance the critical paths within a circuit and reduce its overall clock period, leading to improved timing performance and better overall efficiency.
+  - **Retiming** is an optimization technique used in digital design to improve the performance of a circuit by repositioning registers (flip-flops) along its paths to balance the timing and reduce the critical path delay. The primary goal of retiming is to achieve a shorter clock period without changing the functionality of the circuit.
+ 
+
+# Combinational Logic Optimisations
+
+## opt_check
+
++ `gvim opt_check.v`
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/2e6c4f6d-b7b7-49a0-a4e4-394f49b96a73)
+ 
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check.v
+synth -top opt_check
+opt_clean -purge
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/f24fdf34-5f35-4c60-810a-6e745b5be9f8)
+
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/29439fc7-945e-4ae1-9763-3da5846825b4)
+
+
+## opt_check2 
+
++ `gvim opt_check2.v`
+
+  ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/efdd3dd8-845c-4e00-8588-099b297c8c5f)
+
+  
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check2.v
+synth -top opt_check2
+opt_clean -purge
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/5f90cd99-7df1-4584-ba7e-bc5266a24be9)
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/8cf75ebc-c4ff-416e-940f-faac6a4cf8a1)
+
+## opt_check3 
+
++ `gvim opt_check3.v`
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/708e80c7-933a-4aef-bb21-0ae4a8529255)
+
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check3.v
+synth -top opt_check3
+opt_clean -purge
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/b9f2fd77-430a-4b65-9989-9ab9a70570d3)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/d28c7200-5910-499c-b604-f0b22cfba9b8)
+
+
+## opt_check4 
+
++ `gvim opt_check4.v`
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ea7a9d11-0364-4a0b-8370-5e3bed0daeea)
+
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check4.v
+synth -top opt_check4
+opt_clean -purge
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/c330b995-16c2-4272-a6b4-bc76b124bf2a)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/a68f4c7e-5755-4538-86d5-401b556dae58)
+
+
+## multiple_module_opt
+	
++ `gvim multiple_module_opt.v`
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/c4382bdb-8f3c-4246-8233-fb5799c5a5a7)
+
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_module_opt.v
+synth -top multiple_module_opt
+opt_clean -purge
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+ 
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/b3a4892b-40b4-4eec-98ba-b98387a24f2a)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/6ec1093e-8a32-4576-ac42-6f7cdd35c730)
+
+
+# Sequential Logic Optimisations
+## dff_const1 </summary>	
+
++ `gvim dff_const1.v`
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/478d8085-b541-469b-a26e-d3f4644cb456)
+
+
+**Simulation**
+
+```sh
+iverilog dff_const1.v tb_dff_const1.v
+./a.out
+gtkwave tb_dff_const1.vcd
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/2e668976-6499-48bf-9abb-0ddfc40e8445)
+
+
+**Synthesis**
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const1.v
+synth -top dff_const1
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/05e960a0-baf4-4f11-9aa9-137672ce13b8)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/588092c8-8a35-4bfc-9490-809378fc9d80)
+
+
+## dff_const2 
+
++ `gvim dff_const2.v`
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/bc95b4ab-21c3-45cc-bffb-8b220091fbc6)
+
+
+**Simulation**
+
+```sh
+iverilog dff_const2.v tb_dff_const2.v
+./a.out
+gtkwave tb_dff_const2.vcd
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/acd1b024-c707-48b0-98b4-60cc53782acb)
+
+
+ **Synthesis**
+ 
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const2.v
+synth -top dff_const2
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/79f9f33b-d940-4844-9f85-0be93f9075c6)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/bfc24cf7-8605-4761-b846-05fae8a80c2a)
+
+
+## dff_const3 
+
++ `gvim dff_const3.v`
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/576eda65-2789-402d-90ca-bc24a0a9ee9b)
+
+
+**Simulation**
+
+```sh
+iverilog dff_const3.v tb_dff_const1.v
+./a.out
+gtkwave tb_dff_const3.vcd
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ad4b80c9-60cc-4d70-bac0-f69b78c1862e)
+
+
+**Synthesis**
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const3.v
+synth -top dff_const3
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ee07994c-cff8-4d8a-a518-edf605235fb2)
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/f625bd1e-70d9-403d-a809-7cb74f40f14d)
+
+
+## dff_const4 
+
++ `gvim dff_const4.v`
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/47318043-d60e-45a6-894a-482db94c1d7e)
+
+
+**Simulation**
+
+```sh
+iverilog dff_const4.v tb_dff_const1.v
+./a.out
+gtkwave tb_dff_const4.vcd
+```
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ff0f0bce-673f-443d-8759-7680b9faf010)
+
+
+**Synthesis**
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const4.v
+synth -top dff_const4
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/c34fde83-75fb-4d2f-ab5c-51adbb1d82c5)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/97a0f9e0-ca18-48c0-b1f0-25118f9c6588)
+
+
+## dff_const5 
+
++ `gvim dff_const5.v`
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/ad9d5b32-366c-409c-90aa-b9d09e65653f)
+
+
+**Simulation**
+
+```sh
+iverilog dff_const5.v tb_dff_const1.v
+./a.out
+gtkwave tb_dff_const5.vcd
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/7eeb6f0f-434b-4091-b846-f8fb790fa11f)
+
+
+**Synthesis**
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const5.v
+synth -top dff_const5
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/8f268f49-51d1-43b7-a9a7-0a8b2bdcbe99)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/c402aaa1-d1d6-40df-931a-7ed0911ef27e)
+
+
+# Sequential Optimisations for Unused Outputs
+## counter_opt 
+
+ + `gvim counter_opt.v`
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/34e7ce96-0ab2-4519-9951-3b1947382f59)
+
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog counter_opt.v
+synth -top counter_opt
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/70d9a2de-9765-47d3-a247-0b055d0bb5d3)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/18ef600e-3f38-4102-8d76-dceb9932f576)
+
+
+## counter_opt2 
+
++ `gvim counter_opt2.v`
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/9d4c583b-ed6f-4351-8a2d-a7920c02201d)
+
+
+```sh
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog counter_opt2.v
+synth -top counter_opt2
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+ ![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/57bc0821-b7c6-442d-8778-cabd996ea0c3)
+
+
+![image](https://github.com/ShreyasSAdmar/PES_ASIC/assets/85454575/a35aed3d-33bf-47da-8b2e-a2368566620f)
+
+
+</details>
+
+
+<
+
+
+  
